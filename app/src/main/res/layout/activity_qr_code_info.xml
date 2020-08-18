@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_payment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        tools:context=".activitys.payments.QrCodeInfoActivity">
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_bottom_inputs"
+            app:boxBackgroundColor="@color/white"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/payloadFormatIndicator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Indicador de formato"
+                android:enabled="false"
+                android:textColor="@color/colorTextDisabled"
+                 />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_bottom_inputs"
+            app:boxBackgroundColor="@color/white"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/pointOfInitiationMethod"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Identificador global exclusivo"
+                android:enabled="false"
+                android:textColor="@color/colorTextDisabled" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_bottom_inputs"
+            app:boxBackgroundColor="@color/white"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/globallyUniqueIdentifier"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ponto de iniciação"
+                android:enabled="false"
+                android:textColor="@color/colorTextDisabled" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_bottom_inputs"
+            app:boxBackgroundColor="@color/white"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/merchantAccountInformation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Informações da conta do comerciante"
+                android:enabled="false"
+                android:textColor="@color/colorTextDisabled" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_bottom_inputs"
+            app:boxBackgroundColor="@color/white"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/logicNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Número lógico"
+                android:enabled="false"
+                android:textColor="@color/colorTextDisabled" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_bottom_inputs"
+            app:boxBackgroundColor="@color/white"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/merchantCategoryCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Código da categoria do comerciante"
+                android:enabled="false"
+                android:textColor="@color/colorTextDisabled" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_bottom_inputs"
+            app:boxBackgroundColor="@color/white"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/transactionCurrency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Moeda de transação"
+                android:enabled="false"
+                android:textColor="@color/colorTextDisabled" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_bottom_inputs"
+            app:boxBackgroundColor="@color/white"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/transactionAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Valor da transação"
+                android:enabled="false"
+                android:textColor="@color/colorTextDisabled" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_bottom_inputs"
+            app:boxBackgroundColor="@color/white"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/countryCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Código do país"
+                android:enabled="false"
+                android:textColor="@color/colorTextDisabled" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_bottom_inputs"
+            app:boxBackgroundColor="@color/white"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/merchantName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nome do comerciante"
+                android:enabled="false"
+                android:textColor="@color/colorTextDisabled" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_bottom_inputs"
+            app:boxBackgroundColor="@color/white"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/merchantCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Cidade do comerciante"
+                android:enabled="false"
+                android:textColor="@color/colorTextDisabled" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_bottom_inputs"
+            app:boxBackgroundColor="@color/white"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/transactionGloballyUniqueIdentifier"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Identificador de transação global exclusivo"
+                android:enabled="false"
+                android:textColor="@color/colorTextDisabled" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_bottom_inputs"
+            app:boxBackgroundColor="@color/white"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/transactionId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Identificador da transação"
+                android:enabled="false"
+                android:textColor="@color/colorTextDisabled" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_bottom_inputs"
+            app:boxBackgroundColor="@color/white"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/transactionDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Data da transação"
+                android:enabled="false"
+                android:textColor="@color/colorTextDisabled" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_bottom_inputs"
+            app:boxBackgroundColor="@color/white"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/mainProduct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Produto principal"
+                android:enabled="false"
+                android:textColor="@color/colorTextDisabled" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_bottom_inputs"
+            app:boxBackgroundColor="@color/white"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/subProduct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Subproduto"
+                android:enabled="false"
+                android:textColor="@color/colorTextDisabled" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_bottom_inputs"
+            app:boxBackgroundColor="@color/white"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/paymentInstallments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Prestações de Pagamento"
+                android:enabled="false"
+                android:textColor="@color/colorTextDisabled" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_bottom_inputs"
+            app:boxBackgroundColor="@color/white"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/transactionType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Tipo de transação"
+                android:enabled="false"
+                android:textColor="@color/colorTextDisabled" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_bottom_inputs"
+            app:boxBackgroundColor="@color/white"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/crc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Crc"
+            android:enabled="false"
+            android:textColor="@color/colorTextDisabled"
+            />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+</ScrollView>

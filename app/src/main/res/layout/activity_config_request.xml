@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_config_request"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        tools:context=".activitys.ConfigRequestActivity">
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_bottom_inputs"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/base_url"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/base_url_hint"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_bottom_inputs"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/token"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/token_wallet_hint"
+                android:inputType="textMultiLine" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_bottom_inputs"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/notification_token"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Token de notificação"
+                android:inputType="textMultiLine" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <Button
+            android:id="@+id/btnGetTokenFirebase"
+            android:layout_width="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            app:icon="@drawable/ic_save_alt_white"
+            app:iconTint="@color/white"
+            android:textSize="11dp"
+            app:backgroundTint="@color/colorPrimary"
+            android:text="Obter token"
+            android:onClick="submitConfigRequest"/>
+
+        <Button
+            android:id="@+id/btnConfigRequestSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_button"
+            android:onClick="submitConfigRequest"
+            android:text="@string/save" />
+
+    </LinearLayout>
+</ScrollView>

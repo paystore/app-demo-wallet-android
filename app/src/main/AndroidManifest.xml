@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.phoebus.appdemowallet">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <application
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_phoebus_default"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_phoebus_default_round"
+        android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".activities.ConfigRequestActivity"/>
+        <activity android:name=".activities.ResponseActivity"/>
+        <activity android:name=".activities.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activities.cardholders.MenuCardHoldersActivity"/>
+        <activity android:name=".activities.cardholders.CreateCardHolderActivity"/>
+        <activity android:name=".activities.cardholders.ConfirmCardHolderActivity"/>
+        <activity android:name=".activities.cardholders.ValidateCardHolderActivity"/>
+        <activity android:name=".activities.cardholders.RemoveCardHolderActivity"/>
+        <activity android:name=".activities.cardholders.ResendConfirmationCodeActivity"/>
+        <activity android:name=".activities.cards.MenuCardsActivity"/>
+        <activity android:name=".activities.cards.SaveCardActivity"/>
+        <activity android:name=".activities.cards.CreatePreferredCardActivity"/>
+        <activity android:name=".activities.cards.RemoveCardActivity"/>
+        <activity android:name=".activities.cards.ActivateCardActivity"/>
+        <activity android:name=".activities.cards.DeactivateCardActivity"/>
+        <activity android:name=".activities.cards.GetCardActivity"/>
+        <activity android:name=".activities.cards.GetCardsActivity"/>
+        <activity android:name=".activities.payments.MenuPaymentsActivity"/>
+        <activity android:name=".activities.payments.ReadQrCodeActivity"/>
+        <activity android:name=".activities.payments.QrCodeInfoActivity"/>
+        <activity android:name=".activities.payments.PaymentActivity"/>
+        <activity android:name=".activities.payments.ConsultPaymentsActivity"/>
+        <activity
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:screenOrientation="portrait"
+            tools:replace="android:screenOrientation"
+            android:stateNotNeeded="true"
+            tools:ignore="LockedOrientationActivity" />
+    </application>
+
+</manifest>

@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">AppDemoWallet</string>
+
+    <string name="demo_wallet">Demo Wallet</string>
+    <string name="card_holders">Portadores</string>
+    <string name="cards">Cartões dos portadores</string>
+    <string name="payments">Pagamentos</string>
+
+    <string name="createCardHolder">Cadastro do portador</string>
+    <string name="confirmationCardHolder">Confirmar cadastro portador</string>
+    <string name="revalidateCardHolder">Solicitar revalidação do portador</string>
+    <string name="removeCardHolder">Remover cadastro de portador</string>
+    <string name="resendConfirmationCode">Reenviar código de confirmação</string>
+
+    <string name="saveCard">Cadastro do cartão do portador</string>
+    <string name="activateCard">Ativar cartão</string>
+    <string name="deactivateCard">Desativar cartão</string>
+    <string name="defineFavoriteCard">Definir cartão favorito</string>
+    <string name="removeCard">Remover cartão do portador</string>
+    <string name="getCard">Obter cartão específico</string>
+    <string name="getCards">Obter cartões do portador</string>
+
+    <string name="payment">Pagamento</string>
+    <string name="consultPayments">Consultar pagamentos</string>
+    <string name="infoQrCode">Informações do QR code</string>
+    <string name="startPayment">Pagamento através de QR Code</string>
+    <string name="readInformationCapturedWithQrCode">Ler Informações do QR Code</string>
+
+    <string name="config">Configuração</string>
+    <string name="infoLogcat">Verifique o Logcat para mais informações</string>
+
+
+    <string name="base_url_hint">http://127.0.0.1/wallet/</string>
+    <string name="token_wallet_hint">Token de Autenticação da API Wallet</string>
+
+    <string name="config_save">Configurações salvas com sucesso</string>
+    <string name="save">Salvar</string>
+    <string name="back">Voltar</string>
+    <string name="title_error">Ops... algo deu errado :(</string>
+
+
+
+
+</resources>
