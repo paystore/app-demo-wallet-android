@@ -61,7 +61,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
 
     // add libwallet library github packages // em Producao
-    implementation 'com.phoebus.libraries:libwallet:1.0.1.0'
+    implementation 'com.phoebus.libraries:libwallet:1.0.2.0'
 
     // add the Firebase SDK for Google Analytics
     implementation 'com.google.firebase:firebase-analytics:17.2.2'
