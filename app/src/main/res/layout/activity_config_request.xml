@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:id="@+id/activity_config_request"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -31,46 +31,137 @@
                 android:hint="@string/base_url_hint"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_bottom_inputs"
-            >
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/token"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="2dp"
+            app:cardElevation="0dp">
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/token_wallet_hint"
-                android:inputType="textMultiLine" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:orientation="vertical"
+                android:paddingTop="15dp"
+                android:paddingBottom="20dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/credential_title"
+                    android:layout_marginBottom="@dimen/margin_bottom_inputs"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    />
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_bottom_inputs">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/client_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/client_id_hint"
+                        android:inputType="textMultiLine" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_bottom_inputs">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/client_secret"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/client_secret_hint"
+                        android:inputType="textMultiLine" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_bottom_inputs">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/token"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/token_wallet_hint"
+                        android:maxLines="7"
+                        android:inputType="textMultiLine" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:id="@+id/btnGetTokenApiWallet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|right"
+                    android:onClick="submitConfigRequest"
+                    android:text="Obter token"
+                    android:textColor="@color/white"
+                    android:textSize="11dp"
+                    app:backgroundTint="@color/colorPrimary"
+                    app:icon="@drawable/ic_save_alt_white"
+                    app:iconTint="@color/white" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_bottom_inputs"
-            >
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/notification_token"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="2dp"
+            app:cardElevation="0dp">
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Token de notificação"
-                android:inputType="textMultiLine" />
-        </com.google.android.material.textfield.TextInputLayout>
-        <Button
-            android:id="@+id/btnGetTokenFirebase"
-            android:layout_width="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            app:icon="@drawable/ic_save_alt_white"
-            app:iconTint="@color/white"
-            android:textSize="11dp"
-            app:backgroundTint="@color/colorPrimary"
-            android:text="Obter token"
-            android:onClick="submitConfigRequest"/>
+                android:orientation="vertical"
+                android:paddingTop="15dp"
+                android:paddingBottom="20dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/notification_title"
+                    android:layout_marginBottom="@dimen/margin_bottom_inputs"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    />
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_bottom_inputs"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/notification_token"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Token de notificação"
+                        android:inputType="textMultiLine" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <Button
+                    android:id="@+id/btnGetTokenFirebase"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="bottom|right"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    app:icon="@drawable/ic_save_alt_white"
+                    app:iconTint="@color/white"
+                    android:textSize="11dp"
+                    app:backgroundTint="@color/colorPrimary"
+                    android:text="Obter token"
+                    android:onClick="submitConfigRequest"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
         <Button
             android:id="@+id/btnConfigRequestSubmit"

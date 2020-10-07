@@ -31,7 +31,12 @@
 
 
     <string name="base_url_hint">http://127.0.0.1/wallet/</string>
-    <string name="token_wallet_hint">Token de Autenticação da API Wallet</string>
+
+    <string name="credential_title">Credenciais da API Wallet</string>
+    <string name="token_wallet_hint">Token de autenticação</string>
+    <string name="client_id_hint">Client id</string>
+    <string name="client_secret_hint">Client secret</string>
+    <string name="notification_title">Credenciais de notificação</string>
 
     <string name="config_save">Configurações salvas com sucesso</string>
     <string name="save">Salvar</string>

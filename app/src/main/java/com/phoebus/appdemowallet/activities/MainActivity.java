@@ -22,8 +22,6 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final String AUTHORIZATION_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoxLCJpZGVudGlmaWVyIjoiRUNPTU1FUkNFIiwibWVyY2hhbnRfc3BlY2lmaWNfaWQiOiIwMDQwODMiLCJ1dWlkIjoiMjc3ZTcyNTEtN2ZhZi00OWYzLTk2NDMtMjE5MmFhNjMzNThiIiwiaWF0IjoxNTc3MDk4MTgzLCJuYmYiOjE1NzcwNzAwMDAsImV4cCI6MTY0MzY4NDM5OX0.tnWO4KZvPnp_P0ZaQDzOvTP5FXwQMspTtpt7WSZcZ_o";
-
     private final int MENU_CARD_HOLDER = 0;
     private final int MENU_CARD = 1;
     private final int MENU_PAYMENT = 2;
