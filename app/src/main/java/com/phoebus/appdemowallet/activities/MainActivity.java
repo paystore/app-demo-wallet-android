@@ -20,6 +20,10 @@ import com.phoebus.libwallet.utils.Helper;
 
 import java.util.ArrayList;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.os.Build;
+
 public class MainActivity extends AppCompatActivity {
 
     private final int MENU_CARD_HOLDER = 0;
@@ -66,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        createNotificationChannel();
+
         WalletPermissions.getInstance(this).requiresPermission();
     }
 
@@ -92,6 +98,19 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ConfigRequestActivity.class);
         startActivity(intent);
         return true;
+    }
+
+    public void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Create channel to show notifications.
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            NotificationChannel channel = new NotificationChannel(
+                    getString(R.string.firebase_notification_channel_id),
+                    getString(R.string.firebase_notification_channel_name),
+                    NotificationManager.IMPORTANCE_LOW
+            );
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
 }

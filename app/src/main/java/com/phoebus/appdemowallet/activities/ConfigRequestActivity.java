@@ -89,7 +89,7 @@ public class ConfigRequestActivity extends AppCompatActivity {
         this.notificationToken = this.edtNotificationToken.getText().toString();
 
         Helper.writePrefs(this, ConstantsApp.BASE_URL_CONFIG, baseUrl, ConstantsApp.PREFS_CONFIG);
-        Helper.writePrefs(this, ConstantsApp.TOKEN_CONFIG, token, ConstantsApp.PREFS_CONFIG);
+        Helper.writePrefs(this, ConstantsApp.TOKEN_CONFIG, "Bearer " + token, ConstantsApp.PREFS_CONFIG);
         Helper.writePrefs(this, ConstantsApp.NOTIFICATION_TOKEN_CONFIG, notificationToken, ConstantsApp.PREFS_CONFIG);
 
 
@@ -104,18 +104,16 @@ public class ConfigRequestActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<InstanceIdResult> task) {
                         if (!task.isSuccessful()) {
-                            Log.w(Constants.TAG, "getInstanceId failed", task.getException());
+                            Log.w(Constants.TAG, "Error ao obter token do firebase", task.getException());
                             return;
                         }
 
-                        // Get new Instance ID token
                         String token = task.getResult().getToken();
 
-                        edtNotificationToken.setText(token);
+                        Log.d(Constants.TAG, "Firebase | ID: " + task.getResult().getId());
+                        Log.d(Constants.TAG, "Firebase | Token:" + token);
 
-                        // Log and toast
-                        String msg = "token Firebase " + token;
-                        Log.d(Constants.TAG, msg);
+                        edtNotificationToken.setText(token);
                     }
                 });
     }

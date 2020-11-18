@@ -22,6 +22,7 @@ import com.phoebus.libwallet.models.GetPaymentResponse;
 import com.phoebus.libwallet.models.GetPaymentResponsePage;
 import com.phoebus.libwallet.models.IWalletApiService;
 import com.phoebus.libwallet.models.IWalletCallback;
+import com.phoebus.libwallet.models.ListPaymentRequest;
 import com.phoebus.libwallet.service.WalletApiService;
 import com.phoebus.libwallet.utils.Constants;
 import com.phoebus.libwallet.utils.ErrorUtils;
@@ -29,17 +30,30 @@ import com.phoebus.libwallet.utils.Helper;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import br.com.concrete.canarinho.watcher.MascaraNumericaTextWatcher;
 import retrofit2.Response;
 
 public class ConsultPaymentsActivity extends AppCompatActivity {
 
-    private String initDateTime;
-    private String finishDateTime;
+    private String startDate;
+    private String finishDate;
+    private String status = null;
+    private String startAmount = null;
+    private String finishAmount = null;
+    private String cardId = null;
+    private Integer pageSize = null;
+    private Integer page = null;
 
     private EditText edtInitDateTime;
     private EditText edtFinishDateTime;
+    private EditText edtStatus;
+    private EditText edtStartAmount;
+    private EditText edtFinishAmount;
+    private EditText edtCardId;
+    private EditText edtPageSize;
+    private EditText edtPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +66,13 @@ public class ConsultPaymentsActivity extends AppCompatActivity {
         edtInitDateTime.addTextChangedListener(new MascaraNumericaTextWatcher("##/##/####"));
         this.edtFinishDateTime = this.findViewById(R.id.finish_datetime);
         edtFinishDateTime.addTextChangedListener(new MascaraNumericaTextWatcher("##/##/####"));
+
+        this.edtStatus = this.findViewById(R.id.consult_status);
+        this.edtStartAmount = this.findViewById(R.id.consult_start_amount);
+        this.edtFinishAmount = this.findViewById(R.id.consult_finish_amount);
+        this.edtCardId = this.findViewById(R.id.consult_card_id);
+        this.edtPageSize = this.findViewById(R.id.consult_page_size);
+        this.edtPage = this.findViewById(R.id.consult_page);
 
         setDefaultValues();
     }
@@ -66,19 +87,36 @@ public class ConsultPaymentsActivity extends AppCompatActivity {
     }
 
     public void submitConsultPayments(View view) {
-        initDateTime = this.edtInitDateTime.getText().toString();
-        finishDateTime = this.edtFinishDateTime.getText().toString();
+        startDate = this.edtInitDateTime.getText().toString();
+        finishDate = this.edtFinishDateTime.getText().toString();
 
-        initDateTime = DateUtil.formatDate(this.initDateTime, "dd/MM/yyyy", "yyyy-MM-dd");
-        finishDateTime = DateUtil.formatDate(this.finishDateTime, "dd/MM/yyyy", "yyyy-MM-dd");
+        if (!this.edtStatus.getText().toString().isEmpty())
+            status = this.edtStatus.getText().toString();
 
-        Log.d("FORM ConsultPayments", this.initDateTime + " " + this.finishDateTime);
+        if (!this.edtStartAmount.getText().toString().isEmpty())
+            startAmount = this.edtStartAmount.getText().toString();
+
+        if (!this.edtFinishAmount.getText().toString().isEmpty())
+            finishAmount = this.edtFinishAmount.getText().toString();
+
+        if (!this.edtCardId.getText().toString().isEmpty())
+            cardId = this.edtCardId.getText().toString();
+
+        if (!this.edtPageSize.getText().toString().isEmpty())
+            pageSize = Integer.parseInt(this.edtPageSize.getText().toString());
+
+        if (!this.edtPage.getText().toString().isEmpty())
+            page = Integer.parseInt(this.edtPage.getText().toString());
+
+        startDate = DateUtil.formatDate(this.startDate, "dd/MM/yyyy", "yyyy-MM-dd");
+        finishDate = DateUtil.formatDate(this.finishDate, "dd/MM/yyyy", "yyyy-MM-dd");
+
+        Log.d("FORM ConsultPayments", this.startDate + " " + this.finishDate);
 
         consultPaymentsTest();
     }
 
     private void consultPaymentsTest() {
-        //TODO implementar função de consulta
         String BASE_URL_WALLET = Helper.readPrefsString(getApplicationContext(), ConstantsApp.BASE_URL_CONFIG, ConstantsApp.PREFS_CONFIG);
         String AUTHORIZATION_TOKEN = Helper.readPrefsString(getApplicationContext(), ConstantsApp.TOKEN_CONFIG, ConstantsApp.PREFS_CONFIG);
 
@@ -89,7 +127,10 @@ public class ConsultPaymentsActivity extends AppCompatActivity {
                 .build();
 
         try {
-            apiService.listPayments(initDateTime, finishDateTime, null, null, new IWalletCallback<GetPaymentResponsePage>() {
+            ListPaymentRequest listPaymentRequest = new ListPaymentRequest(startDate, finishDate,
+                    status, startAmount, finishAmount, cardId, pageSize,
+                    page);
+            apiService.listPayments(listPaymentRequest, new IWalletCallback<GetPaymentResponsePage>() {
                 @Override
                 public void onResponse(Response<GetPaymentResponsePage> response) {
                     Log.d(Constants.TAG, String.format("statusCode: %s ", response.code()));
@@ -100,14 +141,14 @@ public class ConsultPaymentsActivity extends AppCompatActivity {
                         for(GetPaymentResponse getPaymentResponse : getPaymentResponsePage.getContent()) {
                             Log.d(Constants.TAG, getPaymentResponse.getAppTransactionId());
                             Log.d(Constants.TAG, getPaymentResponse.getPaymentId());
-                            Log.d(Constants.TAG, getPaymentResponse.getMerchantPaymentId()+"");
+                            Log.d(Constants.TAG, getPaymentResponse.getStatus()+"");
                             Log.d(Constants.TAG, getPaymentResponse.getPaymentDateTime()+"");
                             Log.d(Constants.TAG, getPaymentResponse.getAuthorizationCode() + "");
                             Log.d(Constants.TAG, getPaymentResponse.getCardId() + "");
                             Log.d(Constants.TAG, getPaymentResponse.getAmount() + "");
-                            Log.d(Constants.TAG, getPaymentResponse.getMainProduct() + "");
-                            Log.d(Constants.TAG, getPaymentResponse.getSubProduct() + "");
-                            Log.d(Constants.TAG, getPaymentResponse.getInstalments() + "");
+                            Log.d(Constants.TAG, getPaymentResponse.getProduct() + "");
+                            Log.d(Constants.TAG, getPaymentResponse.getProductType() + "");
+                            Log.d(Constants.TAG, getPaymentResponse.getInstallments() + "");
                             Log.d(Constants.TAG, getPaymentResponse.getMerchantName() + "");
                             Log.d(Constants.TAG, getPaymentResponse.getMerchantCity() + "");
 
@@ -115,26 +156,17 @@ public class ConsultPaymentsActivity extends AppCompatActivity {
 
                         Gson gson = new Gson();
                         String jsonInString = gson.toJson(getPaymentResponsePage);
-                        showResult(jsonInString);
+                        showResult(getPaymentResponsePage, jsonInString);
 
 
                     } else {
                         GeneralErrorResponse generalErrorResponse = ErrorUtils.parseError(response);
+
                         if (generalErrorResponse != null) {
-                            Log.d(Constants.TAG, generalErrorResponse.getTimestamp());
-                            Log.d(Constants.TAG, generalErrorResponse.getMessage());
-                            Log.d(Constants.TAG, generalErrorResponse.getStatus().toString());
-                            Log.d(Constants.TAG, generalErrorResponse.getError());
-                            if (generalErrorResponse.getErrors() != null) {
-                                for (FieldValidationErrorResponse errorCurrent : generalErrorResponse.getErrors()) {
-                                    Log.d(Constants.TAG, errorCurrent.getDefaultMessage());
-                                    Log.d(Constants.TAG, errorCurrent.getField());
-                                    Log.d(Constants.TAG, errorCurrent.getRejectValue() + "");
-                                }
-                            }
+
                             Gson gson = new Gson();
                             String jsonInString = gson.toJson(generalErrorResponse);
-                            showResult(jsonInString);
+                            showErrorResult(jsonInString);
 
                         }
                     }
@@ -146,7 +178,7 @@ public class ConsultPaymentsActivity extends AppCompatActivity {
 
                     DialogUtils.showMessage("falha na requisição",
                             throwable.getMessage(),
-                            getApplicationContext(),
+                            ConsultPaymentsActivity.this,
                             ImageDialogs.ERROR.ordinal());
                 }
             });
@@ -155,14 +187,25 @@ public class ConsultPaymentsActivity extends AppCompatActivity {
 
             DialogUtils.showMessage("Exception",
                     e.getMessage(),
-                    getApplicationContext(),
+                    ConsultPaymentsActivity.this,
                     ImageDialogs.ERROR.ordinal());
 
             Toast.makeText(getApplicationContext(), R.string.infoLogcat, Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void showResult(String response) {
+    private void showResult(GetPaymentResponsePage response, String responseString) {
+        List<GetPaymentResponse> content = response.getContent();
+        if(content.size() > 0){
+            Intent itResponse = new Intent(getApplicationContext(), ListPaymentActivity.class);
+            itResponse.putExtra("result", responseString);
+            startActivity(itResponse);
+        }else{
+            Toast.makeText(getApplicationContext(), "Nenhum pagamento encontrado", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void showErrorResult(String response) {
         Intent itResponse = new Intent(getApplicationContext(), ResponseActivity.class);
         itResponse.putExtra("result", response);
         startActivity(itResponse);

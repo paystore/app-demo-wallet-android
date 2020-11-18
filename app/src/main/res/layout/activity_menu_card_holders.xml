@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activitys.cardholders.MenuCardHoldersActivity">
+    tools:context=".activities.cardholders.MenuCardHoldersActivity">
         <ListView
         android:id="@+id/lvMenu"
         android:layout_width="match_parent"

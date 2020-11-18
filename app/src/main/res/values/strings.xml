@@ -43,7 +43,9 @@
     <string name="back">Voltar</string>
     <string name="title_error">Ops... algo deu errado :(</string>
 
-
-
+    <!-- START FIREBASE -->
+    <string name="firebase_notification_channel_id" translatable="false">firebase_default_channel</string>
+    <string name="firebase_notification_channel_name" translatable="true">Cancelamento</string>
+    <!-- END FIREBASE -->
 
 </resources>

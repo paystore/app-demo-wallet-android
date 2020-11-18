@@ -63,32 +63,6 @@ public class CreateCardHolderActivity extends AppCompatActivity {
         this.edtBirthDate = this.findViewById(R.id.birth_date);
         edtBirthDate.addTextChangedListener(new MascaraNumericaTextWatcher("##/##/####"));
 
-        setDefaultValues();
-
-    }
-
-    private void setDefaultValues() {
-
-        String name = Helper.readPrefsString(getApplicationContext(), ConstantsApp.CREATE_CARD_HOLDER_FULL_NAME, ConstantsApp.PREFS_CONFIG);
-        if (name == null || name.isEmpty()) {
-            edtFullName.setText("Jhon Doe");
-            edtEmail.setText("jhondoe@gmail.com");
-            edtNationalDocument.setText("80037203037");
-            edtCellPhoneNumber.setText("83987654321");
-            edtBirthDate.setText("10/05/1990");
-        } else {
-            edtFullName.setText(Helper.readPrefsString(getApplicationContext(), ConstantsApp.CREATE_CARD_HOLDER_FULL_NAME, ConstantsApp.PREFS_CONFIG));
-            edtEmail.setText(Helper.readPrefsString(getApplicationContext(), ConstantsApp.CREATE_CARD_HOLDER_EMAIL, ConstantsApp.PREFS_CONFIG));
-            edtNationalDocument.setText(Helper.readPrefsString(getApplicationContext(), ConstantsApp.CREATE_CARD_HOLDER_NATIONAL_ID, ConstantsApp.PREFS_CONFIG));
-            edtCellPhoneNumber.setText(Helper.readPrefsString(getApplicationContext(), ConstantsApp.CREATE_CARD_HOLDER_CELL_PHONE, ConstantsApp.PREFS_CONFIG));
-
-            Log.d(Constants.TAG, Helper.readPrefsString(getApplicationContext(), ConstantsApp.CREATE_CARD_HOLDER_BIRT_DATE, ConstantsApp.PREFS_CONFIG));
-            String strDate = Helper.readPrefsString(getApplicationContext(), ConstantsApp.CREATE_CARD_HOLDER_BIRT_DATE, ConstantsApp.PREFS_CONFIG);
-            strDate = strDate.substring(8, 10)
-                    + strDate.substring(5, 7)
-                    + strDate.substring(0, 4);
-            edtBirthDate.setText(strDate);
-        }
     }
 
     public void submitCreateCardHolder(View view) {
@@ -100,20 +74,14 @@ public class CreateCardHolderActivity extends AppCompatActivity {
         birthDate = this.edtBirthDate.getText().toString();
         birthDate = DateUtil.formatDate(this.birthDate, "dd/MM/yyyy", "yyyy-MM-dd");
 
-        Log.d("FORM CreateCardHolder", this.fullName + " " + this.email + " " + this.nationalDocument + " " + this.cellPhoneNumber + " " + this.birthDate);
-
         createCardHolderTest();
-
-
     }
 
     private void createCardHolderTest() {
         String BASE_URL_WALLET = Helper.readPrefsString(getApplicationContext(), ConstantsApp.BASE_URL_CONFIG, ConstantsApp.PREFS_CONFIG);
         String AUTHORIZATION_TOKEN = Helper.readPrefsString(getApplicationContext(), ConstantsApp.TOKEN_CONFIG, ConstantsApp.PREFS_CONFIG);
 
-
         String notificationToken = Helper.readPrefsString(getApplicationContext(), ConstantsApp.NOTIFICATION_TOKEN_CONFIG, ConstantsApp.PREFS_CONFIG);
-
 
         CreateCardholderRequestDTO createCardholderRequestDTO = new CreateCardholderRequestDTO(fullName,
                 email, nationalDocument,
@@ -133,8 +101,6 @@ public class CreateCardHolderActivity extends AppCompatActivity {
 
                 @Override
                 public void onResponse(Response<SaveCardholderResponse> response) {
-                    Log.d(Constants.TAG, String.format("statusCode: %s ", response.code()));
-
                     if (response.isSuccessful()) {
                         SaveCardholderResponse saveCardholderResponse = response.body();
 
@@ -155,32 +121,21 @@ public class CreateCardHolderActivity extends AppCompatActivity {
 
                     } else {
                         GeneralErrorResponse generalErrorResponse = ErrorUtils.parseError(response);
-                        if (generalErrorResponse != null) {
-                            Log.d(Constants.TAG, generalErrorResponse.getTimestamp());
-                            Log.d(Constants.TAG, generalErrorResponse.getMessage());
-                            Log.d(Constants.TAG, generalErrorResponse.getStatus().toString());
-                            Log.d(Constants.TAG, generalErrorResponse.getError());
-                            if (generalErrorResponse.getErrors() != null) {
-                                for (FieldValidationErrorResponse errorCurrent : generalErrorResponse.getErrors()) {
-                                    Log.d(Constants.TAG, errorCurrent.getDefaultMessage());
-                                    Log.d(Constants.TAG, errorCurrent.getField());
-                                    Log.d(Constants.TAG, errorCurrent.getRejectValue() + "");
-                                }
 
-                            }
+                        if (generalErrorResponse != null) {
 
                             Gson gson = new Gson();
                             String jsonInString = gson.toJson(generalErrorResponse);
                             showResult(jsonInString);
+
                         }
                     }
-
 
                 }
 
                 @Override
                 public void onFailure(Throwable throwable) {
-                    Log.e(Constants.TAG, throwable.getMessage());
+                    Log.e(Constants.TAG, throwable.getMessage(), throwable);
 
                     handler.post(() -> DialogUtils.showMessage(getString(R.string.title_error),
                             throwable.getMessage(),

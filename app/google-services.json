@@ -1,35 +1,42 @@
 {
   "project_info": {
-    "project_number": "1037085932141",
-    "firebase_url": "https://appdemowallet.firebaseio.com",
-    "project_id": "appdemowallet",
-    "storage_bucket": "appdemowallet.appspot.com"
+    "project_number": "640977646089",
+    "firebase_url": "https://paystore-wallet-api-9be21.firebaseio.com",
+    "project_id": "paystore-wallet-api-9be21",
+    "storage_bucket": "paystore-wallet-api-9be21.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1037085932141:android:38c400e8ec8468636a5d64",
+        "mobilesdk_app_id": "1:640977646089:android:6e4139383677eed39ffed8",
         "android_client_info": {
           "package_name": "com.phoebus.appdemowallet"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1037085932141-0qkq1ik1i1jln0865gfu730fornl5vk2.apps.googleusercontent.com",
+          "client_id": "640977646089-hrhnfdg2oq4lndfqi1vh6depc326n2s7.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD2NZ2CWBNHpRPV_7sO90gZlbtT-f4oSyY"
+          "current_key": "AIzaSyBaEV6iBCVYSLHPDfgBUmGjw7jQpfc2AM0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1037085932141-0qkq1ik1i1jln0865gfu730fornl5vk2.apps.googleusercontent.com",
+              "client_id": "640977646089-hrhnfdg2oq4lndfqi1vh6depc326n2s7.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "640977646089-ki6jqui11atmr83n4agtlu83l1lmr24n.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.phoebus.wallet"
+              }
             }
           ]
         }
