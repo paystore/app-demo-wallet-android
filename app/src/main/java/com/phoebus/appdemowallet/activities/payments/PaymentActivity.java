@@ -18,6 +18,7 @@ import com.phoebus.appdemowallet.activities.ResponseActivity;
 import com.phoebus.appdemowallet.utils.ConstantsApp;
 import com.phoebus.appdemowallet.utils.DialogUtils;
 import com.phoebus.appdemowallet.utils.ImageDialogs;
+import com.phoebus.appdemowallet.utils.QrCodeUtils;
 import com.phoebus.libwallet.models.CreatePaymentResponse;
 import com.phoebus.libwallet.models.GeneralErrorResponse;
 import com.phoebus.libwallet.models.IWalletApiService;
@@ -29,6 +30,12 @@ import com.phoebus.libwallet.utils.Constants;
 import com.phoebus.libwallet.utils.ErrorUtils;
 import com.phoebus.libwallet.utils.Helper;
 
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.Collections;
+import java.util.List;
+
 import retrofit2.Response;
 
 public class PaymentActivity extends AppCompatActivity {
@@ -37,14 +44,12 @@ public class PaymentActivity extends AppCompatActivity {
     private String cardHolderId;
     private String appTransactionId;
     private String cvv;
-    private Integer installment;
 
     private EditText edtQrCode;
     private EditText edtCardId;
     private EditText edtCardHolderId;
     private EditText edtAppTransactionId;
     private EditText edtCvv;
-    private EditText edtInstallment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,18 +63,21 @@ public class PaymentActivity extends AppCompatActivity {
         this.edtCardHolderId = this.findViewById(R.id.card_holder_id);
         this.edtAppTransactionId = this.findViewById(R.id.app_transaction_id);
         this.edtCvv = this.findViewById(R.id.cvv);
-        this.edtInstallment = this.findViewById(R.id.installment);
 
         setDefaultValues();
     }
 
     private void setDefaultValues() {
-        this.edtQrCode.setText("00020101021226440008PayStore0116123456789012000102082009130352040000530398654120000000001005802BR5909SENFFCARD6011CURITIBA PR 801050037\"https://www.senffcard.com.br/qrcode\"011613050329197F190A0212150518113349030410000404000105020006020163049872");
-        this.edtCardId.setText("56aab9ec-da5e-47ce-9a45-3acb6ed6b07e");
-        this.edtCardHolderId.setText("5f1706f9714e87610d50b8bd");
+        this.edtQrCode.setText(QrCodeUtils.sample());
+
+        String lastCardId = Helper.readPrefsString(getApplicationContext(), ConstantsApp.CARD_ID, ConstantsApp.PREFS_CONFIG);
+        this.edtCardId.setText(lastCardId);
+
+        String lastCardHolderId = Helper.readPrefsString(getApplicationContext(), ConstantsApp.CARD_HOLDER_ID, ConstantsApp.PREFS_CONFIG);
+        this.edtCardHolderId.setText(lastCardHolderId);
+
         this.edtAppTransactionId.setText("123456ABCDEF");
         this.edtCvv.setText("999");
-        this.edtInstallment.setText("1");
     }
 
     public void submitPayment(View view){
@@ -78,8 +86,14 @@ public class PaymentActivity extends AppCompatActivity {
         this.cardHolderId = this.edtCardHolderId.getText().toString();
         this.appTransactionId = this.edtAppTransactionId.getText().toString();
         this.cvv = this.edtCvv.getText().toString();
-        this.installment = Integer.parseInt(this.edtInstallment.getText().toString());
-        Log.d("FORM payment", this.qrCode+" "+this.cardId+" "+this.cardHolderId+" "+this.appTransactionId+" "+this.cvv+" "+this.installment);
+
+        Log.d(Constants.TAG, "Dados de pagamento: {"
+                + "\n  QRCode: " + this.qrCode
+                + "\n  cardIf: " + this.cardId
+                + "\n  card: " + this.cardHolderId
+                + "\n  appTransactionId: " + this.appTransactionId
+                + "\n  cvv: " + this.cvv
+                +"\n}");
 
         startPayment();
     }
@@ -111,93 +125,64 @@ public class PaymentActivity extends AppCompatActivity {
     }
 
     private void startPayment() {
-        String BASE_URL_WALLET = Helper.readPrefsString(getApplicationContext(), ConstantsApp.BASE_URL_CONFIG, ConstantsApp.PREFS_CONFIG);
-        String AUTHORIZATION_TOKEN = Helper.readPrefsString(getApplicationContext(), ConstantsApp.TOKEN_CONFIG, ConstantsApp.PREFS_CONFIG);
-
-        IWalletApiService apiService = new WalletApiService.WalletApiBuilder(getApplicationContext())
-                .baseUrlWallet(BASE_URL_WALLET)
-                .authorization(AUTHORIZATION_TOKEN)
-                .build();
-
-        // chama e executa a consulta com os dados do QRCode
-        QRCodeInfo qrCodeInfo = null;
         try {
-            qrCodeInfo = apiService.getQRCodeInfo(this.qrCode);
+            String BASE_URL_WALLET = Helper.readPrefsString(getApplicationContext(), ConstantsApp.BASE_URL_CONFIG, ConstantsApp.PREFS_CONFIG);
+            String AUTHORIZATION_TOKEN = Helper.readPrefsString(getApplicationContext(), ConstantsApp.TOKEN_CONFIG, ConstantsApp.PREFS_CONFIG);
 
-            Log.d(Constants.TAG, qrCodeInfo.getPayloadFormatIndicator());
-            Log.d(Constants.TAG, qrCodeInfo.getPointOfInitiationMethod());
-            Log.d(Constants.TAG, qrCodeInfo.getMerchantAccountInformation().getGloballyUniqueIdentifier());
-            Log.d(Constants.TAG, qrCodeInfo.getMerchantAccountInformation().getMerchantAccountInformation());
-            Log.d(Constants.TAG, qrCodeInfo.getMerchantAccountInformation().getLogicNumber());
-            Log.d(Constants.TAG, qrCodeInfo.getMerchantCategoryCode());
-            Log.d(Constants.TAG, qrCodeInfo.getTransactionCurrency());
-            Log.d(Constants.TAG, qrCodeInfo.getTransactionAmount());
-            Log.d(Constants.TAG, qrCodeInfo.getCountryCode());
-            Log.d(Constants.TAG, qrCodeInfo.getMerchantName());
-            Log.d(Constants.TAG, qrCodeInfo.getMerchantCity());
-            Log.d(Constants.TAG, qrCodeInfo.getTransactionInformations().getTransactionGloballyUniqueIdentifier());
-            Log.d(Constants.TAG, qrCodeInfo.getTransactionInformations().getTransactionID());
-            Log.d(Constants.TAG, qrCodeInfo.getTransactionInformations().getTransactionDate());
-            Log.d(Constants.TAG, qrCodeInfo.getTransactionInformations().getMainProduct());
-            Log.d(Constants.TAG, qrCodeInfo.getTransactionInformations().getSubProduct());
-            Log.d(Constants.TAG, qrCodeInfo.getTransactionInformations().getPaymentInstallments());
-            Log.d(Constants.TAG, qrCodeInfo.getTransactionInformations().getTransactionType());
-            Log.d(Constants.TAG, qrCodeInfo.getCrc());
-        } catch (Exception e) {
-            Log.e(Constants.TAG, e.getMessage(), e);
-        }
+            IWalletApiService apiService = new WalletApiService.WalletApiBuilder(getApplicationContext())
+                    .baseUrlWallet(BASE_URL_WALLET)
+                    .authorization(AUTHORIZATION_TOKEN)
+                    .build();
 
-        try {
+            // chama e executa a consulta com os dados do QRCode
+            QRCodeInfo qrCodeInfo = apiService.getQRCodeInfo(this.qrCode);
+            QrCodeUtils.log(qrCodeInfo);
+
             //após o usuário confirmar em tela será chamado o pagamento
-            //chama o método de pagamento
             CreatePaymentRequestDTO createPaymentRequestDTO = new CreatePaymentRequestDTO();
             createPaymentRequestDTO.setAppTransactionId(this.appTransactionId); // id generate app other.
-            createPaymentRequestDTO.setCardholderId(this.cardHolderId);
             createPaymentRequestDTO.setQrcodeData(this.qrCode);
             createPaymentRequestDTO.setCardId(this.cardId); //input users or preferred card
             createPaymentRequestDTO.setCvv(this.cvv); //input for users.
-            createPaymentRequestDTO.setAmount(qrCodeInfo.getTransactionAmount()); //info qrcode data
-            createPaymentRequestDTO.setMainProduct(qrCodeInfo.getTransactionInformations().getMainProduct()); ////info qrcode data
-            createPaymentRequestDTO.setSubProduct(qrCodeInfo.getTransactionInformations().getSubProduct()); ////info qrcode data
-            createPaymentRequestDTO.setInstallments(this.installment); //input for users.
+            createPaymentRequestDTO.setCardholderId(this.cardHolderId);
+
+            String ip = getDeviceIPAddress(true);
+            createPaymentRequestDTO.setIp(ip);
 
             String notificationToken = Helper.readPrefsString(getApplicationContext(), ConstantsApp.NOTIFICATION_TOKEN_CONFIG, ConstantsApp.PREFS_CONFIG);
             createPaymentRequestDTO.setNotificationToken(notificationToken);
 
-
+            //chama o método de pagamento
             apiService.startPayment(createPaymentRequestDTO, new IWalletCallback<CreatePaymentResponse>() {
                 @Override
                 public void onResponse(Response<CreatePaymentResponse> response) {
                     Toast.makeText(getApplicationContext(), R.string.infoLogcat, Toast.LENGTH_SHORT).show();
-                    Log.d(Constants.TAG, String.format("statusCode: %s ", response.code()));
+                    Log.d(Constants.TAG, String.format("startPayment statusCode: %s ", response.code()));
 
                     if (response.isSuccessful()) {
                         CreatePaymentResponse createPaymentResponse = response.body();
 
-                        Log.d(Constants.TAG, createPaymentResponse.getPaymentId());
-                        Log.d(Constants.TAG, createPaymentResponse.getAuthorizationCode());
-                        Log.d(Constants.TAG, createPaymentResponse.getMerchantPaymentId());
-                        Log.d(Constants.TAG, createPaymentResponse.getPaymentDateTime());
+                        Log.d(Constants.TAG, "startPayment response: {"
+                                + "\n authorizationCode: " + createPaymentResponse.getAuthorizationCode()
+                                + "\n merchantPaymentId: " + createPaymentResponse.getMerchantPaymentId()
+                                + "\n paymentDateTime: " + createPaymentResponse.getPaymentDateTime()
+                                + "\n paymentId: " + createPaymentResponse.getPaymentId()
+                                + "\n}");
 
                         Gson gson = new Gson();
                         String jsonInString = gson.toJson(createPaymentResponse);
                         showResult(jsonInString);
 
                     } else {
-                        GeneralErrorResponse generalErrorResponse = ErrorUtils.parseError(response);
-                        if (generalErrorResponse != null) {
-                            Log.d(Constants.TAG, generalErrorResponse.getTimestamp());
-                            Log.d(Constants.TAG, generalErrorResponse.getMessage());
-                            Log.d(Constants.TAG, generalErrorResponse.getStatus().toString());
-                            Log.d(Constants.TAG, generalErrorResponse.getError());
-                            Log.d(Constants.TAG, generalErrorResponse.getErrors().get(0).getDefaultMessage());
-                            Log.d(Constants.TAG, generalErrorResponse.getErrors().get(0).getField());
 
+                        GeneralErrorResponse generalErrorResponse = ErrorUtils.parseError(response);
+
+                        if (generalErrorResponse != null) {
                             Gson gson = new Gson();
                             String jsonInString = gson.toJson(generalErrorResponse);
                             showResult(jsonInString);
-
                         }
+
                     }
                 }
 
@@ -207,21 +192,20 @@ public class PaymentActivity extends AppCompatActivity {
 
                     DialogUtils.showMessage("falha na requisição",
                             throwable.getMessage(),
-                            getApplicationContext(),
+                            PaymentActivity.this,
                             ImageDialogs.ERROR.ordinal());
 
                     Log.e(Constants.TAG, throwable.getMessage());
                 }
             });
         } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), R.string.infoLogcat, Toast.LENGTH_SHORT).show();
             Log.e(Constants.TAG, e.getMessage(), e);
 
-            DialogUtils.showMessage("Exception",
+            DialogUtils.showMessage("falha ao enviar pagamento",
                     e.getMessage(),
-                    getApplicationContext(),
+                    PaymentActivity.this,
                     ImageDialogs.ERROR.ordinal());
-
-            Toast.makeText(getApplicationContext(), R.string.infoLogcat, Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -230,6 +214,40 @@ public class PaymentActivity extends AppCompatActivity {
         Intent itResponse = new Intent(getApplicationContext(), ResponseActivity.class);
         itResponse.putExtra("result", response);
         startActivity(itResponse);
+    }
+
+    public static String getDeviceIPAddress(boolean useIPv4) {
+        try {
+            List<NetworkInterface> networkInterfaces = Collections.list(NetworkInterface.getNetworkInterfaces());
+            for (NetworkInterface networkInterface : networkInterfaces) {
+                List<InetAddress> inetAddresses = Collections.list(networkInterface.getInetAddresses());
+                for (InetAddress inetAddress : inetAddresses) {
+                    if (!inetAddress.isLoopbackAddress()) {
+
+                        String sAddr = inetAddress.getHostAddress().toUpperCase();
+
+                        boolean isIPv4 = inetAddress instanceof Inet4Address;
+
+                        if (useIPv4) {
+                            if (isIPv4)
+                                return sAddr;
+
+                        } else {
+                            if (!isIPv4) {
+                                // drop ip6 port suffix
+                                int delim = sAddr.indexOf('%');
+                                return delim < 0 ? sAddr : sAddr.substring(0, delim);
+                            }
+                        }
+                    }
+                }
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return "";
     }
 
 }

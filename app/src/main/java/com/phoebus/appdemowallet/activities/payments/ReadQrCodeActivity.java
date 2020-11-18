@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.phoebus.appdemowallet.R;
+import com.phoebus.appdemowallet.utils.QrCodeUtils;
 import com.phoebus.libwallet.models.IWalletApiService;
 import com.phoebus.libwallet.models.qrcode.QRCodeInfo;
 import com.phoebus.libwallet.service.WalletApiService;
@@ -32,7 +33,7 @@ public class ReadQrCodeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_read_qr_code);
 
         this.edtQrCode = this.findViewById(R.id.qr_code);
-        this.edtQrCode.setText("00020101021226440008PayStore0116123456789012000102082009130352040000530398654120000000001005802BR5909SENFFCARD6011CURITIBA PR 801050037\"https://www.senffcard.com.br/qrcode\"011613050329197F190A0212150518113349030410000404000105020006020163049872");
+        this.edtQrCode.setText(QrCodeUtils.sample());
         Log.d("1 - QR code", this.edtQrCode.getText().toString());
     }
 
@@ -77,27 +78,10 @@ public class ReadQrCodeActivity extends AppCompatActivity {
         try {
             qrCodeInfo = apiService.getQRCodeInfo(this.qrCode);
 
-            Log.d(Constants.TAG, qrCodeInfo.getPayloadFormatIndicator());
-            Log.d(Constants.TAG, qrCodeInfo.getPointOfInitiationMethod());
-            Log.d(Constants.TAG, qrCodeInfo.getMerchantAccountInformation().getGloballyUniqueIdentifier());
-            Log.d(Constants.TAG, qrCodeInfo.getMerchantAccountInformation().getMerchantAccountInformation());
-            Log.d(Constants.TAG, qrCodeInfo.getMerchantAccountInformation().getLogicNumber());
-            Log.d(Constants.TAG, qrCodeInfo.getMerchantCategoryCode());
-            Log.d(Constants.TAG, qrCodeInfo.getTransactionCurrency());
-            Log.d(Constants.TAG, qrCodeInfo.getTransactionAmount());
-            Log.d(Constants.TAG, qrCodeInfo.getCountryCode());
-            Log.d(Constants.TAG, qrCodeInfo.getMerchantName());
-            Log.d(Constants.TAG, qrCodeInfo.getMerchantCity());
-            Log.d(Constants.TAG, qrCodeInfo.getTransactionInformations().getTransactionGloballyUniqueIdentifier());
-            Log.d(Constants.TAG, qrCodeInfo.getTransactionInformations().getTransactionID());
-            Log.d(Constants.TAG, qrCodeInfo.getTransactionInformations().getTransactionDate());
-            Log.d(Constants.TAG, qrCodeInfo.getTransactionInformations().getMainProduct());
-            Log.d(Constants.TAG, qrCodeInfo.getTransactionInformations().getSubProduct());
-            Log.d(Constants.TAG, qrCodeInfo.getTransactionInformations().getPaymentInstallments());
-            Log.d(Constants.TAG, qrCodeInfo.getTransactionInformations().getTransactionType());
-            Log.d(Constants.TAG, qrCodeInfo.getCrc());
+            QrCodeUtils.log(qrCodeInfo);
 
             Bundle bundle = new Bundle();
+
             bundle.putString("payloadFormatIndicator", qrCodeInfo.getPayloadFormatIndicator());
             bundle.putString("pointOfInitiationMethod", qrCodeInfo.getPointOfInitiationMethod());
             bundle.putString("globallyUniqueIdentifier", qrCodeInfo.getMerchantAccountInformation().getGloballyUniqueIdentifier());
@@ -116,6 +100,7 @@ public class ReadQrCodeActivity extends AppCompatActivity {
             bundle.putString("subProduct", qrCodeInfo.getTransactionInformations().getSubProduct());
             bundle.putString("paymentInstallments", qrCodeInfo.getTransactionInformations().getPaymentInstallments());
             bundle.putString("transactionType", qrCodeInfo.getTransactionInformations().getTransactionType());
+            bundle.putString("merchantTransactionId", qrCodeInfo.getTransactionInformations().getMerchantTransactionID());
             bundle.putString("crc", qrCodeInfo.getCrc());
 
             Intent intent = new Intent(getApplicationContext(), QrCodeInfoActivity.class);

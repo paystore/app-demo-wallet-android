@@ -28,6 +28,7 @@ public class QrCodeInfoActivity extends AppCompatActivity {
     private EditText subProduct;
     private EditText paymentInstallments;
     private EditText transactionType;
+    private EditText merchantTransactionId;
     private EditText crc;
 
     @Override
@@ -54,6 +55,7 @@ public class QrCodeInfoActivity extends AppCompatActivity {
         this.subProduct = this.findViewById(R.id.subProduct);
         this.paymentInstallments = this.findViewById(R.id.paymentInstallments);
         this.transactionType = this.findViewById(R.id.transactionType);
+        this.merchantTransactionId = this.findViewById(R.id.merchantTransactionId);
         this.crc = this.findViewById(R.id.crc);
 
         setDefaultValues();
@@ -81,6 +83,7 @@ public class QrCodeInfoActivity extends AppCompatActivity {
             this.subProduct.setText(extras.getString("subProduct"));
             this.paymentInstallments.setText(extras.getString("paymentInstallments"));
             this.transactionType.setText(extras.getString("transactionType"));
+            this.merchantTransactionId.setText(extras.getString("merchantTransactionId"));
             this.crc.setText(extras.getString("crc"));
         }
     }

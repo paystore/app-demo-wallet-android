@@ -86,18 +86,9 @@ public class GetCardsActivity extends AppCompatActivity {
 
                     } else {
                         GeneralErrorResponse generalErrorResponse = ErrorUtils.parseError(response);
+
                         if (generalErrorResponse != null) {
-                            Log.d(Constants.TAG, generalErrorResponse.getTimestamp());
-                            Log.d(Constants.TAG, generalErrorResponse.getMessage());
-                            Log.d(Constants.TAG, generalErrorResponse.getStatus().toString());
-                            Log.d(Constants.TAG, generalErrorResponse.getError());
-                            if (generalErrorResponse.getErrors() != null) {
-                                for (FieldValidationErrorResponse errorCurrent : generalErrorResponse.getErrors()) {
-                                    Log.d(Constants.TAG, errorCurrent.getDefaultMessage());
-                                    Log.d(Constants.TAG, errorCurrent.getField());
-                                    Log.d(Constants.TAG, errorCurrent.getRejectValue() + "");
-                                }
-                            }
+
                             Gson gson = new Gson();
                             String jsonInString = gson.toJson(generalErrorResponse);
                             showResult(jsonInString);

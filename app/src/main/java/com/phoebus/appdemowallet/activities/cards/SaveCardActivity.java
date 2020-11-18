@@ -45,8 +45,6 @@ public class SaveCardActivity extends AppCompatActivity {
     private EditText edtDueDate;
     private EditText edtCvv;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,28 +57,18 @@ public class SaveCardActivity extends AppCompatActivity {
         edtDueDate = this.findViewById(R.id.due_date);
         edtDueDate.addTextChangedListener(new MascaraNumericaTextWatcher("##/####"));
         edtCvv = this.findViewById(R.id.cvv);
-        setDefaultValues();
-    }
-
-    private void setDefaultValues() {
-        String localCardHolderId = Helper.readPrefsString(this, ConstantsApp.CARD_HOLDER_ID, ConstantsApp.PREFS_CONFIG);
-        String id = (localCardHolderId == null || localCardHolderId.isEmpty()) ? "0d593ebb-d1bf-47db-849d-3e99c470267a" : localCardHolderId;
-
-        edtCardholderId.setText(id);
-        edtNumber.setText("0000000000000000");
-        edtCardHolderName.setText("John Doe");
-        edtDueDate.setText("01/2030");
-        edtCvv.setText("999");
     }
 
     public void submitSaveCard(View view) {
         cardholderId = edtCardholderId.getText().toString();
         number = this.edtNumber.getText().toString();
         cardHolderName = this.edtCardHolderName.getText().toString();
+
         dueDate = this.edtDueDate.getText().toString();
         dueDate = DateUtil.formatDate(this.dueDate, "MM/yyyy", "yyyy-MM");
+
         cvv = this.edtCvv.getText().toString();
-        Log.d("FORM SaveCard", number +" "+ this.cardHolderName + " " + this.dueDate);
+        cvv = !cvv.isEmpty() ? cvv : null;
 
         saveCardTest();
     }
@@ -114,19 +102,9 @@ public class SaveCardActivity extends AppCompatActivity {
 
                     } else {
                         GeneralErrorResponse generalErrorResponse = ErrorUtils.parseError(response);
-                        if (generalErrorResponse != null) {
-                            Log.d(Constants.TAG, generalErrorResponse.getTimestamp());
-                            Log.d(Constants.TAG, generalErrorResponse.getMessage());
-                            Log.d(Constants.TAG, generalErrorResponse.getStatus().toString());
-                            Log.d(Constants.TAG, generalErrorResponse.getError());
-                            if (generalErrorResponse.getErrors() != null) {
-                                for (FieldValidationErrorResponse errorCurrent : generalErrorResponse.getErrors()) {
-                                    Log.d(Constants.TAG, errorCurrent.getDefaultMessage());
-                                    Log.d(Constants.TAG, errorCurrent.getField());
-                                    Log.d(Constants.TAG, errorCurrent.getRejectValue() + "");
-                                }
 
-                            }
+                        if (generalErrorResponse != null) {
+
                             Gson gson = new Gson();
                             String jsonInString = gson.toJson(generalErrorResponse);
                             showResult(jsonInString);

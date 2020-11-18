@@ -43,8 +43,8 @@ public class MenuCardHoldersActivity extends AppCompatActivity {
                     startActivity(confirmCardholderIntent);
                     break;
                 case MENU_REVALIDATE_CARD_HOLDER:
-                    Intent validateCardHolderIntent = new Intent(this, ValidateCardHolderActivity.class);
-                    startActivity(validateCardHolderIntent);
+                    Intent revalidateCardHolderIntent = new Intent(this, RevalidateCardHolderActivity.class);
+                    startActivity(revalidateCardHolderIntent);
                     break;
                 case MENU_REMOVE_CARD_HOLDER:
                     Intent removeCardHolderIntent = new Intent(this, RemoveCardHolderActivity.class);

@@ -34,7 +34,6 @@ public class CreatePreferredCardActivity extends AppCompatActivity {
 
     public void submitCreatePreferredCard(View view){
         this.cardId = this.edtCardId.getText().toString();
-        Log.d("FORM PreferredCard", this.cardId);
 
         createPreferredCardTest();
     }
